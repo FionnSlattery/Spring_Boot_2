@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    tools{
+        git 'Default'
+    }
     stages{
         stage("GetProject"){
             steps {
@@ -13,15 +16,14 @@ pipeline{
                 sh 'mvn compiler:compile'
             }
         }
-        
         stage('Package'){
             steps{
                 sh 'mvn package'
             }
         }
     }
-    post {
-        success {
+    stage ('Archive') {
+        steps {
             archiveArtifacts allowEmptyArchive: true,
                 artifacts: '**/demo*.war'
         }
