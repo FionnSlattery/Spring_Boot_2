@@ -1,31 +1,33 @@
-pipeline {
+pipeline{
     agent any
     tools{
-        git 'Default'
+        jdk 'jdk17'   // minimal fix: set JDK tool (must exist in Jenkins > Global Tool Configuration)
     }
-    stages {
-        stage ('GetProject') {
+    stages{
+        stage("GetProject"){
             steps {
                 git branch:'main', url:'https://github.com/FionnSlattery/Spring_Boot_2.git'
             }
         }
-        stage ('build') {
-            steps {
-                sh 'mvn clean:clean'
-                sh 'mvn dependency:copy-dependencies'
-                sh 'mvn compiler:compile'
+        stage('build'){
+            steps{
+                sh 'chmod +x mvnw'
+                sh './mvnw clean:clean'
+                sh './mvnw dependency:copy-dependencies'
+                sh './mvnw compiler:compile'
             }
         }
-        stage ('Package') {
-            steps {
-                sh 'mvn package'
+        stage('Package'){
+            steps{
+                sh './mvnw -B -DskipTests package --no-transfer-progress'
             }
         }
-	stage ('Archive') {
+        stage('Archive') {
             steps {
                 archiveArtifacts allowEmptyArchive: true,
-             	artifacts:'**/demo*.war'
+                    artifacts: 'target/*.jar, target/*.war'
             }
         }
     }
 }
+
