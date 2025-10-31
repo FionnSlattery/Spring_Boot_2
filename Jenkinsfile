@@ -1,7 +1,7 @@
 pipeline{
     agent any
     tools{
-        jdk 'jdk17'   // minimal fix: set JDK tool (must exist in Jenkins > Global Tool Configuration)
+        git 'Default'  // minimal fix: set JDK tool (must exist in Jenkins > Global Tool Configuration)
     }
     stages{
         stage("GetProject"){
