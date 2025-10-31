@@ -21,7 +21,6 @@ pipeline{
                 sh 'mvn package'
             }
         }
-    }
     stage ('Archive') {
         steps {
             archiveArtifacts allowEmptyArchive: true,
@@ -29,3 +28,4 @@ pipeline{
         }
     }
 }
+}    
