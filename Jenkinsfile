@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("GetProject"){
             steps {
-                git branch:'main', url:'https://github.com/FionnSlattery/CT5171_Maven_lab.git'
+                git branch:'main', url:'https://github.com/FionnSlattery/Spring_Boot_2.git'
             }
         }
         stage('build'){
